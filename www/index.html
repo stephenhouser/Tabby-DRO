@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<!--
+    Licensed to the Apache Software Foundation (ASF) under one
+    or more contributor license agreements.  See the NOTICE file
+    distributed with this work for additional information
+    regarding copyright ownership.  The ASF licenses this file
+    to you under the Apache License, Version 2.0 (the
+    "License"); you may not use this file except in compliance
+    with the License.  You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+    Unless required by applicable law or agreed to in writing,
+    software distributed under the License is distributed on an
+    "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+     KIND, either express or implied.  See the License for the
+    specific language governing permissions and limitations
+    under the License.
+-->
+<html lang="en">
+    <head>
+        <!--
+        Customize this policy to fit your own app's needs. For more guidance, see:
+            https://github.com/apache/cordova-plugin-whitelist/blob/master/README.md#content-security-policy
+        Some notes:
+            * gap: is required only on iOS (when using UIWebView) and is needed for JS->native communication
+            * https://ssl.gstatic.com is required only on Android and is needed for TalkBack to function properly
+            * Disables use of inline scripts in order to mitigate risk of XSS vulnerabilities. To change this:
+                * Enable inline JS: add 'unsafe-inline' to default-src
+        -->
+        <!--meta http-equiv="Content-Security-Policy" content="default-src 'self' data: gap: https://ssl.gstatic.com 'unsafe-eval'; style-src 'self' 'unsafe-inline'; media-src *; img-src 'self' data: content:;"-->
+        
+        <title>Tabby DRO</title>
+
+        <meta charset="utf-8" />
+        <meta name="format-detection" content="telephone=no" />
+        <meta name="viewport" content="user-scalable=no, initial-scale=1, shrink-to-fit=no, maximum-scale=1, minimum-scale=1, width=device-width, height=device-height, viewport-fit=cover"
+        />
+        <meta name="msapplication-tap-highlight" content="no" />
+        
+        <link rel="stylesheet" href="css/bootstrap.min.css" />
+        <link rel="stylesheet" type="text/css" href="css/index.css" />
+
+        <link rel="stylesheet" href="fontawesome-free-5.1.0-web/css/all.css" />
+    </head>
+    <body>
+
+        <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+                aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <a class="navbar-brand" href="#">Tabby DRO</a>
+
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav mr-auto">
+                    <li class="nav-item active">
+                        <a class="nav-link" href="#">Display
+                            <span class="sr-only">(current)</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Settings</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link disabled" href="#">About...</a>
+                    </li>
+                </ul>
+            </div>
+
+            <button id="connectButton" class="btn btn-outline-success my-2 my-sm-0">Connect</button>
+
+        </nav>
+
+        <div class="app container-fluid">
+
+                <!--div id="ui" class="col-2">
+                    <button id="connectButton" class="btn btn-primary">Connect</button>
+                </div-->
+            <div id="axis-display" class="row">
+                <div class="col-md-8">
+
+                    <div id="x-axis" class="axis row">
+                        <div class="col">
+                            <div class="axis-label">X</div>
+                            <div class="axis-value">
+                                <span class="axis-value-background">888.8888</span>
+                                <span id="x-value" class="axis-value-foreground">!!0.0071</span>
+                            </div>
+                            <div class="axis-controls">
+                                <button class="axis-units btn btn-secondary">mm <span class="off">/in</span></button>
+                                <button class="axis-zero btn btn-primary">X=0</button>
+                            </div>
+                        </div>
+                    
+                    </div>
+
+                    <div id="y-axis" class="axis row">
+                        <div class="col">
+                            <div class="axis-label">Y</div>
+                            <div class="axis-value">
+                                <span class="axis-value-background">888.8888</span>
+                                <span id="y-value" class="axis-value-foreground">!!0.0071</span>
+                            </div>
+                            <div class="axis-controls">
+                                <button class="axis-units btn btn-secondary">mm
+                                    <span class="off">/in</span>
+                                </button>
+                                <button class="axis-zero btn btn-primary">Y=0</button>
+                            </div>
+                        </div>                    
+                    </div>
+
+                    <div id="z-axis" class="axis row">
+                        <div class="col">
+                            <div class="axis-label">Z</div>
+                            <div class="axis-value">
+                                <span class="axis-value-background">888.8888</span>
+                                <span id="z-value" class="axis-value-foreground">!!0.0071</span>
+                            </div>
+                            <div class="axis-controls">
+                                <button class="axis-units btn btn-secondary">mm
+                                    <span class="off">/in</span>
+                                </button>
+                                <button class="axis-zero btn btn-primary">Z=0</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div id="w-axis" class="axis row">
+                        <div class="col">
+                            <div class="axis-label">W</div>
+                            <div class="axis-value">
+                                <span class="axis-value-background">888.8888</span>
+                                <span id="w-value" class="axis-value-foreground">!!0.0071</span>
+                            </div>
+                            <div class="axis-controls">
+                                <button class="axis-units btn btn-secondary">&#176;
+                                    <span class="off">/rad</span>
+                                </button>
+                                <button class="axis-zero btn btn-primary">W=0</button>
+                            </div>
+                        </div>                    
+                    </div>
+
+                    <div id="tachometer" class="axis row">
+                        <div class="col">
+                            <div class="axis-label">RPM</div>
+                            <div class="axis-value" style="display: inline-block;">
+                                <span class="axis-value-background">888888</span>
+                                <span id="t-value" class="axis-value-foreground">!!!!69</span>
+                            </div>
+                            <div class="axis-controls">
+                                <button class="axis-zero btn btn-primary">T=0</button>
+                            </div>
+                        </div>                    
+                    </div>
+
+                    <div id="touch-probe" class="row vertical-align">
+                        <div class="col">
+                            <div class="axis-label">Probe</div>
+                            <div class="axis-value" style="display: inline-block;">
+                                <span class="axis-value-background">!!!</span>
+                                <span id="p-value" class="axis-value-foreground">off</span>
+                            </div>
+                            <div class="axis-controls">
+                                <button class="axis-zero btn btn-primary">T=0</button>
+                            </div>
+                        </div>
+                    </div>                    
+                </div>
+                <div id="calc" class="col-md-4">
+                    <ul>
+                        <li>Point 1</li>
+                        <li>Point 2</li>
+                        <li>Point 3</li>
+                        <li>Point 4</li>
+                        <li>Point 5</li>
+                        <li>Point 6</li>
+                    </ul>
+                    <button class="btn btn-primary">Add</button>
+                    <button class="btn btn-primary">Clear</button>
+                </div>
+            </div>
+
+            <div id="messages">
+                O.k.
+            </div>
+        </div>
+
+        <script type="text/javascript" src="cordova.js"></script>
+        <script type="text/javascript" src="js/index.js"></script>
+
+        <script>
+            app.initialize();
+        </script>
+
+        <script src="js/jquery-3.3.1.slim.min.js"></script>
+        <script src="js/popper.min.js"></script>
+        <script src="js/bootstrap.min.js"></script>
+    </body>
+</html>
