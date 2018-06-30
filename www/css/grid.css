@@ -1,0 +1,178 @@
+
+@font-face {
+  font-family: "DSEG7Classic-Italic";
+  src: url("../fonts-DSEG_v045/DSEG7-Classic/DSEG7Classic-Italic.woff") format('woff'),
+       url("../fonts-DSEG_v045/DSEG7-Classic/DSEG7Classic-Italic.ttf") format('truetype');
+}
+
+@font-face {
+  font-family: "DSEG7Modern-Italic";
+  src: url("../fonts-DSEG_v045/DSEG7-Modern/DSEG7Modern-Italic.woff2"),
+       url("../fonts-DSEG_v045/DSEG7-Modern/DSEG7Modern-Italic.woff"),
+       url("../fonts-DSEG_v045/DSEG7-Modern/DSEG7Modern-Italic.ttf");
+}
+
+
+html {
+    background-color: black;
+}
+
+body {
+	margin: 0px;
+  padding: 0px;
+}
+
+.on {
+    color: white;
+}
+
+.off {
+    color: darkred;
+    font-size: x-small;
+}
+
+.app {
+  display: grid;
+  grid-gap: 5px;
+  grid-template-areas: 
+    "header"
+    "nav"
+    "display"
+    "points"
+	  "tools"
+    "calculator";
+  background-color: black;
+  color: white;
+}
+
+.main-header {
+  grid-area: header;
+}
+
+.display {
+  grid-area: display;
+}
+
+.navbar {
+  grid-area: navbar;
+}
+
+.points {
+  grid-area: points;
+}
+
+.main-footer {
+  grid-area: footer;
+}
+
+@media (min-width: 500px) {
+  .app {
+    grid-template-columns: 3fr 1fr;
+    grid-template-areas: 
+      "navbar  navbar"
+      "display points"
+      "footer  footer";
+  }
+  nav ul {
+    display: flex;
+    justify-content: space-between;
+  }
+}
+
+.axis-display {
+  border: 1px solid grey;
+  border-radius: 5px;
+  font-size: 1em;
+
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  align-items: center;
+
+  margin-bottom: 0.25em;
+  padding-left: 0.25em;
+  padding-right: 0.25em;
+  padding-top: 0.25em;
+  padding-bottom: 0.25em;
+}
+
+@media (min-width: 576px) {
+  .axis-display {
+    font-size: 1.25em;
+  }
+}
+
+@media (min-width: 720px) {
+  .axis-display {
+    font-size: 1.75em;
+  }
+}
+
+@media (min-width: 768px) {
+  .axis-display {
+    font-size: 2em;
+  }
+}
+
+.axis-label,
+.axis-units {
+    height: 3.0em;
+}
+
+.axis-value {
+    font-family: "DSEG7Modern-Italic";
+    font-size: 2em;
+    text-align: left;
+    margin-left: 0.25em;
+    margin-right: 0.25em;
+}
+
+.axis-value-background {
+    position: absolute;
+    z-index: 50;
+    color: rgba(255,255,255,0.25);
+}
+
+.axis-value-foreground {
+    z-index: 100;
+    color: greenyellow;
+}
+
+.axis-value-units {
+  font-size: .33em;
+  margin-left: -.5em;
+  font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+  vertical-align: middle;
+
+  display: inline-flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+
+  line-height: 2em;
+}
+
+.inches {
+  color: gray;
+  font-size: 2em;
+}
+
+.metric {
+  color: greenyellow;
+}
+
+.degrees {
+  font-size: 2em;
+  color: greenyellow;
+}
+
+.radians {
+  color: gray;
+}
+
+#w-axis {
+    xdisplay: none;
+}
+
+#touch-probe {
+    display: none;
+}

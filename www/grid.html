@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<!--
+			Customize this policy to fit your own app's needs. For more guidance, see:
+				https://github.com/apache/cordova-plugin-whitelist/blob/master/README.md#content-security-policy
+			Some notes:
+				* gap: is required only on iOS (when using UIWebView) and is needed for JS->native communication
+				* https://ssl.gstatic.com is required only on Android and is needed for TalkBack to function properly
+				* Disables use of inline scripts in order to mitigate risk of XSS vulnerabilities. To change this:
+					* Enable inline JS: add 'unsafe-inline' to default-src
+			-->
+		<!--meta http-equiv="Content-Security-Policy" content="default-src 'self' data: gap: https://ssl.gstatic.com 'unsafe-eval'; style-src 'self' 'unsafe-inline'; media-src *; img-src 'self' data: content:;"-->
+
+		<title>Tabby DRO</title>
+
+		<meta charset="utf-8" />
+		<meta name="format-detection" content="telephone=no" />
+		<meta name="viewport" content="user-scalable=no, initial-scale=1, shrink-to-fit=no, maximum-scale=1, minimum-scale=1, width=device-width, height=device-height, viewport-fit=cover"
+		/>
+		<meta name="msapplication-tap-highlight" content="no" />
+
+		<link rel="stylesheet" href="css/grid.css" />
+		<link rel="stylesheet" href="css/bootstrap.min.css" />
+	</head>
+
+	<body>
+		<div class="app">
+			<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+				<div class="dropdown">
+					<button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true"
+				aria-expanded="false">
+						<span class="navbar-toggler-icon"></span>
+					</button>
+
+					<div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+						<a class="dropdown-item" href="#">Main</a>
+						<a class="dropdown-item" href="#">Settings</a>
+						<a class="dropdown-item" href="#">About...</a>
+					</div>
+			</div>
+			<a class="navbar-brand" href="#">Tabby DRO</a>
+			<button id="connectButton" class="btn btn-outline-success my-2 my-sm-0">Connect</button>
+		
+		</nav>
+
+
+		<div class="display">
+			<div id="x-axis" class="axis-display">
+				<button class="axis-label btn btn-primary">X(0)</button>
+				<div class="axis-value">
+					<span class="axis-value-background">888.8888</span>
+					<span id="x-value" class="axis-value-foreground">!!0.0071</span>
+					<div class="axis-value-units">
+						<div class="inches">&rdquo;</div>
+						<div class="metric">mm</div>
+					</div>
+				</div>
+				<button class="axis-units btn btn-secondary">abs
+					<span class="off">/inc</span>
+				</button>
+			</div>
+			<div id="y-axis" class="axis-display">
+				<button class="axis-label btn btn-primary">Y(0)</button>
+				<div class="axis-value">
+					<span class="axis-value-background">888.8888</span>
+					<span id="y-value" class="axis-value-foreground">!!0.0071</span>
+					<div class="axis-value-units">
+						<div class="inches">&rdquo;</div>
+						<div class="metric">mm</div>
+					</div>
+				</div>
+				<button class="axis-units btn btn-secondary">abs
+					<span class="off">/inc</span>
+				</button>
+			</div>
+			<div id="z-axis" class="axis-display">
+				<button class="axis-label btn btn-primary">Z(0)</button>
+				<div class="axis-value">
+					<span class="axis-value-background">888.8888</span>
+					<span id="z-value" class="axis-value-foreground">!!0.0071</span>
+					<div class="axis-value-units">
+						<div class="inches">&rdquo;</div>
+						<div class="metric">mm</div>
+					</div>
+				</div>
+				<button class="axis-units btn btn-secondary">abs
+					<span class="off">/inc</span>
+				</button>
+			</div>
+			<div id="w-axis" class="axis-display">
+				<button class="axis-label btn btn-primary">W(0)</button>
+				<div class="axis-value">
+					<span class="axis-value-background">888.8888</span>
+					<span id="y-value" class="axis-value-foreground">!!0.0071</span>
+					<div class="axis-value-units">
+						<div class="degrees">&#176;</div>
+						<div class="radians">rad</div>
+					</div>
+				</div>
+				<button class="axis-units btn btn-secondary">abs
+					<span class="off">/inc</span>
+				</button>
+			</div>
+
+			<div id="tachometer" class="axis-display">
+				<div class="axis-label">RPM</div>
+				<div class="axis-value">
+					<span class="axis-value-background">888888</span>
+					<span id="t-value" class="axis-value-foreground">!!!!69</span>
+				</div>
+				<div class="axis-controls">
+					<button class="axis-zero btn btn-primary">T=0</button>
+				</div>
+				</div>
+			</div>
+		</div>
+
+
+		<div class="points">Point list</div>
+		<footer class="main-footer">Footer</footer>
+		</div>
+
+		<script type="text/javascript" src="cordova.js"></script>
+		<script type="text/javascript" src="js/index.js"></script>
+
+		<script>
+			app.initialize();
+		</script>
+
+		<script src="js/jquery-3.3.1.slim.min.js"></script>
+		<script src="js/bootstrap.min.js"></script>
+	</body>
+
+</html>
