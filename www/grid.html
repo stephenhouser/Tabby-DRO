@@ -25,100 +25,157 @@
 	</head>
 
 	<body>
-		<div class="app">
-			<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-				<div class="dropdown">
-					<button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true"
-				aria-expanded="false">
-						<span class="navbar-toggler-icon"></span>
-					</button>
-
-					<div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-						<a class="dropdown-item" href="#">Main</a>
-						<a class="dropdown-item" href="#">Settings</a>
-						<a class="dropdown-item" href="#">About...</a>
-					</div>
-			</div>
-			<a class="navbar-brand" href="#">Tabby DRO</a>
-			<button id="connectButton" class="btn btn-outline-success my-2 my-sm-0">Connect</button>
+		<nav id="main-nav" class="navbar navbar-expand-lg navbar-dark bg-dark navbar-collapse">
+			<div class="dropdown">
+				<button class="btn btn-secondary " type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true"
+					aria-expanded="false">
+					<span class="navbar-toggler-icon"></span>
+				</button>
 		
+				<div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+					<a class="dropdown-item" href="#">Points...</a>
+					<a class="dropdown-item" href="#">Tools...</a>
+					<div class="dropdown-divider"></div>
+					<a class="dropdown-item" href="#">Settings</a>
+					<div class="dropdown-divider"></div>
+					<a class="dropdown-item" href="#">About...</a>
+				</div>
+			</div>
+
+			<a class="navbar-brand mx-auto" href="#">Tabby DRO</a>
+			<button id="connectButton" class="btn btn-outline-success my-2 my-sm-0">Connect</button>
 		</nav>
 
+		<div class="app">
+			<div class="display">
 
-		<div class="display">
-			<div id="x-axis" class="axis-display">
-				<button class="axis-label btn btn-primary">X(0)</button>
-				<div class="axis-value">
-					<span class="axis-value-background">888.8888</span>
-					<span id="x-value" class="axis-value-foreground">!!0.0071</span>
-					<div class="axis-value-units">
-						<div class="inches">&rdquo;</div>
-						<div class="metric">mm</div>
+				<div id="x-axis" class="axis-display">
+					<div class="axis-display-label">
+						<button class="btn btn-primary">X(0)</button>
+					</div>
+					<div class="axis-display-value">
+						<span class="axis-display-value-background">888.8888</span>
+						<span id="x-value" class="axis-display-value-foreground">!12.6971</span>
+						<div class="axis-display-value-units">
+							<div class="inches off">&rdquo;</div>
+							<div class="on">mm</div>
+						</div>
+					</div>
+					<div class="axis-display-controls">
+						<button class="btn btn-secondary two-line">
+							<span class="on">abs</span>
+							<span class="off">inc</span>
+						</button>
 					</div>
 				</div>
-				<button class="axis-units btn btn-secondary">abs
-					<span class="off">/inc</span>
-				</button>
-			</div>
-			<div id="y-axis" class="axis-display">
-				<button class="axis-label btn btn-primary">Y(0)</button>
-				<div class="axis-value">
-					<span class="axis-value-background">888.8888</span>
-					<span id="y-value" class="axis-value-foreground">!!0.0071</span>
-					<div class="axis-value-units">
-						<div class="inches">&rdquo;</div>
-						<div class="metric">mm</div>
+
+				<div id="y-axis" class="axis-display">
+					<div class="axis-display-label">
+						<button class="btn btn-primary">Y(0)</button>
+					</div>
+					<div class="axis-display-value">
+						<span class="axis-display-value-background">888.8888</span>
+						<span id="y-value" class="axis-display-value-foreground">-!4.0220</span>
+						<div class="axis-display-value-units">
+							<div class="inches off">&rdquo;</div>
+							<div class="on">mm</div>
+						</div>
+					</div>
+					<div class="axis-display-controls">
+						<button class="btn btn-secondary two-line">
+							<span class="on">abs</span>
+							<span class="off">inc</span>
+						</button>
 					</div>
 				</div>
-				<button class="axis-units btn btn-secondary">abs
-					<span class="off">/inc</span>
-				</button>
-			</div>
-			<div id="z-axis" class="axis-display">
-				<button class="axis-label btn btn-primary">Z(0)</button>
-				<div class="axis-value">
-					<span class="axis-value-background">888.8888</span>
-					<span id="z-value" class="axis-value-foreground">!!0.0071</span>
-					<div class="axis-value-units">
-						<div class="inches">&rdquo;</div>
-						<div class="metric">mm</div>
+
+				<div id="z-axis" class="axis-display">
+					<div class="axis-display-label">
+						<button class="btn btn-primary">Z(0)</button>
+					</div>
+					<div class="axis-display-value">
+						<span class="axis-display-value-background">888.8888</span>
+						<span id="z-value" class="axis-display-value-foreground">!!0.0001</span>
+						<div class="axis-display-value-units">
+							<div class="inches off">&rdquo;</div>
+							<div class="on">mm</div>
+						</div>
+					</div>
+					<div class="axis-display-controls">
+						<button class="btn btn-secondary two-line">
+							<span class="on">abs</span>
+							<span class="off">inc</span>
+						</button>
 					</div>
 				</div>
-				<button class="axis-units btn btn-secondary">abs
-					<span class="off">/inc</span>
-				</button>
-			</div>
-			<div id="w-axis" class="axis-display">
-				<button class="axis-label btn btn-primary">W(0)</button>
-				<div class="axis-value">
-					<span class="axis-value-background">888.8888</span>
-					<span id="y-value" class="axis-value-foreground">!!0.0071</span>
-					<div class="axis-value-units">
-						<div class="degrees">&#176;</div>
-						<div class="radians">rad</div>
+
+				<div id="w-axis" class="axis-display">
+					<div class="axis-display-label">
+						<button class="btn btn-primary">W(0)</button>
+					</div>
+					<div class="axis-display-value">
+						<span class="axis-display-value-background">888.8888</span>
+						<span id="w-value" class="axis-display-value-foreground">235.0142</span>
+						<div class="axis-display-value-units">
+							<div class="on">&#176;</div>
+							<div class="off">rad</div>
+						</div>
+					</div>
+					<div class="axis-display-controls">
+						<button class="btn btn-secondary two-line">
+							<span class="on">abs</span>
+							<span class="off">inc</span>
+						</button>
 					</div>
 				</div>
-				<button class="axis-units btn btn-secondary">abs
-					<span class="off">/inc</span>
+
+				<div id="tachometer" class="axis-display">
+					<div class="axis-display-label">
+						RPM
+						<!--button class="btn btn-primary">RPM</button-->
+					</div>
+					<div class="axis-display-value">
+						<span class="axis-display-value-background">888888</span>
+						<span id="w-value" class="axis-display-value-foreground">!!!!69</span>
+						<div class="axis-display-value-units">
+							<div class="off">sfm</div>
+							<div class="on">rpm</div>
+						</div>
+					</div>
+					<div class="axis-display-controls">
+						<button class="btn btn-secondary two-line">
+							<span class="off">sfm</span>
+							<span class="on">rpm</span>
+						</button>
+					</div>
+				</div>
+
+			</div>
+
+			<div class="controls">
+				<h2>Controls</h2>
+				<button class="btn btn-primary" data-toggle="collapse" data-target="#main-nav" aria-expanded="true"
+				 aria-controls="main-nav">
+					Full<br/>screen
+				</button>
+
+				<button class="btn btn-primary two-line">
+					<span class="on">abs</span>
+					<span class="off">inc</span>
+				</button>
+				<button class="btn btn-primary two-line">
+					<span class="off">in</span>
+					<span class="on">mm</span>
+				</button>
+				<button class="btn btn-primary two-line">
+					<span>XYZ</span>
+					<span>=0</span>
 				</button>
 			</div>
-
-			<div id="tachometer" class="axis-display">
-				<div class="axis-label">RPM</div>
-				<div class="axis-value">
-					<span class="axis-value-background">888888</span>
-					<span id="t-value" class="axis-value-foreground">!!!!69</span>
-				</div>
-				<div class="axis-controls">
-					<button class="axis-zero btn btn-primary">T=0</button>
-				</div>
-				</div>
+			<div class="points">
+				<h2>Saved Points</h2>
 			</div>
-		</div>
-
-
-		<div class="points">Point list</div>
-		<footer class="main-footer">Footer</footer>
+			<footer id="messages" class="main-footer">Footer</footer>
 		</div>
 
 		<script type="text/javascript" src="cordova.js"></script>

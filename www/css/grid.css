@@ -1,8 +1,16 @@
 
 @font-face {
   font-family: "DSEG7Classic-Italic";
-  src: url("../fonts-DSEG_v045/DSEG7-Classic/DSEG7Classic-Italic.woff") format('woff'),
-       url("../fonts-DSEG_v045/DSEG7-Classic/DSEG7Classic-Italic.ttf") format('truetype');
+  src: url("../fonts-DSEG_v045/DSEG7-Classic/DSEG7Classic-Italic.woff2"),
+       url("../fonts-DSEG_v045/DSEG7-Classic/DSEG7Classic-Italic.woff"),
+       url("../fonts-DSEG_v045/DSEG7-Classic/DSEG7Classic-Italic.ttf");
+}
+
+@font-face {
+  font-family: "DSEG7Classic-BoldItalic";
+  src: url("../fonts-DSEG_v045/DSEG7-Classic/DSEG7Classic-BoldItalic.woff2"),
+       url("../fonts-DSEG_v045/DSEG7-Classic/DSEG7Classic-BoldItalic.woff"),
+       url("../fonts-DSEG_v045/DSEG7-Classic/DSEG7Classic-BoldItalic.ttf");
 }
 
 @font-face {
@@ -12,6 +20,12 @@
        url("../fonts-DSEG_v045/DSEG7-Modern/DSEG7Modern-Italic.ttf");
 }
 
+@font-face {
+  font-family: "DSEG7Modern-BoldItalic";
+  src: url("../fonts-DSEG_v045/DSEG7-Modern/DSEG7Modern-BoldItalic.woff2"),
+       url("../fonts-DSEG_v045/DSEG7-Modern/DSEG7Modern-BoldItalic.woff"),
+       url("../fonts-DSEG_v045/DSEG7-Modern/DSEG7Modern-BoldItalic.ttf");
+}
 
 html {
     background-color: black;
@@ -20,15 +34,6 @@ html {
 body {
 	margin: 0px;
   padding: 0px;
-}
-
-.on {
-    color: white;
-}
-
-.off {
-    color: darkred;
-    font-size: x-small;
 }
 
 .app {
@@ -53,16 +58,22 @@ body {
   grid-area: display;
 }
 
-.navbar {
-  grid-area: navbar;
+.controls {
+  grid-area: controls;
+  border: 1px solid grey;
+  padding: .5em .5em .5em .5em;
 }
 
 .points {
   grid-area: points;
+  border: 1px solid grey;
+  padding: .5em .5em .5em .5em;
 }
 
 .main-footer {
   grid-area: footer;
+  border: 1px solid grey;
+  padding: .5em .5em .5em .5em;
 }
 
 @media (min-width: 500px) {
@@ -70,6 +81,7 @@ body {
     grid-template-columns: 3fr 1fr;
     grid-template-areas: 
       "navbar  navbar"
+      "display controls"
       "display points"
       "footer  footer";
   }
@@ -87,6 +99,7 @@ body {
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
+
   align-items: center;
 
   margin-bottom: 0.25em;
@@ -108,37 +121,36 @@ body {
   }
 }
 
-@media (min-width: 768px) {
+@media (min-width: 780px) {
   .axis-display {
     font-size: 2em;
   }
 }
 
-.axis-label,
-.axis-units {
-    height: 3.0em;
+.axis-display-label {
+  flex-grow: 1;
 }
 
-.axis-value {
-    font-family: "DSEG7Modern-Italic";
+.axis-display-value {
+    font-family: "DSEG7Classic-BoldItalic";
     font-size: 2em;
     text-align: left;
     margin-left: 0.25em;
     margin-right: 0.25em;
 }
 
-.axis-value-background {
+.axis-display-value-background {
     position: absolute;
-    z-index: 50;
-    color: rgba(255,255,255,0.25);
+    z-index: 0;
+    color: rgba(128, 128, 128, 0.33);
 }
 
-.axis-value-foreground {
-    z-index: 100;
+.axis-display-value-foreground {
+    z-index: 1;
     color: greenyellow;
 }
 
-.axis-value-units {
+.axis-display-value-units {
   font-size: .33em;
   margin-left: -.5em;
   font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
@@ -152,27 +164,44 @@ body {
 }
 
 .inches {
-  color: gray;
   font-size: 2em;
 }
 
-.metric {
-  color: greenyellow;
+.axis-display-label button {
+    height: 3.5em;
 }
 
-.degrees {
-  font-size: 2em;
-  color: greenyellow;
+.controls button,
+.axis-display-controls button {
+  background-color: black;
+  border-color: white;
+  height: initial;
 }
 
-.radians {
-  color: gray;
+.controls .two-line span,
+.axis-display-controls .two-line span {
+  display: block;
+}
+
+.controls .two-line span:first-child,
+.axis-display-controls .two-line span:first-child {
+  border-bottom: 2px solid grey;;
 }
 
 #w-axis {
-    xdisplay: none;
+    display: none;
 }
 
 #touch-probe {
     display: none;
 }
+
+.on {
+    color: greenyellow;
+    font-weight: bold;
+}
+
+.off {
+    color: rgba(128, 128, 128, 1.0);
+}
+
