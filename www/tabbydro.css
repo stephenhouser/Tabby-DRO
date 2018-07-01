@@ -41,8 +41,6 @@ body {
 /* The area where the Axes are displayed */
 .display {
   grid-area: display;
-
-  xpadding: 0.0em 0.0em 0.0em 0.5em;
 }
 
 /* Where random system control buttons are displayed */

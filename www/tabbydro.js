@@ -114,7 +114,8 @@ class TabbyDROApplication {
     constructor() {
         this.connected = false;
         //this.macAddress = "20:17:12:05:01:59";
-        this.macAddress = "9C2CED71-E4F4-59D6-9D61-35C47C4C8437";
+        //this.macAddress = "9C2CED71-E4F4-59D6-9D61-35C47C4C8437";
+        this.macAddress = "ABB86C67-ABDD-1E31-BA97-B00B52D6CFBB";
 
         this.axes = {}; // hash of axes, indexed by prefix
 
@@ -135,9 +136,9 @@ class TabbyDROApplication {
         console.log("TabbyDRO::initlaize()");
         document.addEventListener('deviceready', this.onDeviceReady, false);
 
-        var connectButton = document.getElementById('connectButton');
-        //connectButton.addEventListener('touchend', this.manageConnection, false);
+        //var connectButton = document.getElementById('connectButton');
         connectButton.addEventListener('click', this.manageConnection);
+        connectButton.classList.add('disabled');
 
         var displayAxes = document.querySelectorAll('[tabby-dro-axis]');
         displayAxes.forEach(this.setupAxis, this);
@@ -191,7 +192,7 @@ class TabbyDROApplication {
 
     setupAxis(axisDiv) {
         console.log(axisDiv);
-        let self = this;
+        var self = this;
         var axisPrefix = axisDiv.getAttribute('tabby-dro-axis');
         var axis = new Axis(axisPrefix);
 
@@ -222,17 +223,21 @@ class TabbyDROApplication {
 
     /* this runs when the device is ready for user interaction: */
     onDeviceReady() {
-        //console.log('TabbyDRO::onDeviceReady');
+        console.log('TabbyDRO::onDeviceReady');
         if (typeof bluetoothSerial === 'undefined') {
             app.clear();
             app.notify("Bluetooth is not available.")
             return;
         }
+        console.log('TabbyDRO::onDeviceReady');
 
         // check to see if Bluetooth is turned on.
         // this function is called only
         //if isEnabled(), below, returns success:
-        var listPorts = function () {
+        var bluetoothIsEnabled = function () {
+            // Enable connect button when Bluetooth is enabled
+            connectButton.classList.remove('disabled');
+
             // list the available BT ports:
             bluetoothSerial.list(
                 function (results) {
@@ -245,16 +250,13 @@ class TabbyDROApplication {
         }
 
         // if isEnabled returns failure, this function is called:
-        var notEnabled = function () {
+        var bluetoothIsDisabled = function () {
             app.clear();
             app.notify("Bluetooth is not enabled.")
         }
 
         // check if Bluetooth is on:
-        bluetoothSerial.isEnabled(
-            listPorts,
-            notEnabled
-        );
+        bluetoothSerial.isEnabled(bluetoothIsEnabled, bluetoothIsDisabled);
     }
 
     /* Connects if not connected, and disconnects if connected */
@@ -295,6 +297,10 @@ class TabbyDROApplication {
         };
 
         // here's the real action of the manageConnection function:
+        connectButton.innerHTML = "Connecting...";
+        connectButton.classList.remove('btn-success');
+        connectButton.classList.add('disabled');
+        connectButton.classList.add('btn-outline-success');
         bluetoothSerial.isConnected(disconnect, connect);
     }
 
@@ -307,7 +313,8 @@ class TabbyDROApplication {
 
         // change the button's name:
         connectButton.innerHTML = "Disconnect";
-        
+        connectButton.classList.remove('disabled');
+
         // set up a listener to listen for value terminators
         bluetoothSerial.subscribe(';', function (data) {
             app.update(data);
@@ -322,7 +329,12 @@ class TabbyDROApplication {
         // if you get a good Bluetooth serial connection:
         app.notify("Disconnected from: " + app.macAddress);
         // change the button's name:
+
         connectButton.innerHTML = "Connect";
+        connectButton.classList.remove('disabled');
+        connectButton.classList.remove('btn-outline-success');
+        connectButton.classList.add('btn-success');
+
         // unsubscribe from listening:
         bluetoothSerial.unsubscribe(
             function (data) {
