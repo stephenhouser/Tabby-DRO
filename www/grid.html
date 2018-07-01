@@ -49,103 +49,111 @@
 		<div class="app">
 			<div class="display">
 
-				<div id="x-axis" class="axis-display">
+				<div id="xAxis" tabby-dro-axis="x" class="axis-display">
 					<div class="axis-display-label">
-						<button class="btn btn-primary">X(0)</button>
+						<button tabby-dro-button="zeroButton" class="btn btn-primary">X(0)</button>
 					</div>
+
 					<div class="axis-display-value">
-						<span class="axis-display-value-background">888.8888</span>
-						<span id="x-value" class="axis-display-value-foreground">!12.6971</span>
+						<div class="axis-display-value-background">888.8888</div>
+						<div tabby-dro-indicator="value-current" class="axis-display-value-foreground">!12.6971</div>
 						<div class="axis-display-value-units">
-							<div class="inches off">&rdquo;</div>
-							<div class="on">mm</div>
+							<div tabby-dro-indicator="units-in" class="inches">&rdquo;</div>
+							<div tabby-dro-indicator="units-mm" class="on">mm</div>
 						</div>
 					</div>
+
 					<div class="axis-display-controls">
-						<button class="btn btn-secondary two-line">
-							<span class="on">abs</span>
-							<span class="off">inc</span>
+						<button tabby-dro-button="absIncButton" class="btn btn-secondary two-line-toggle">
+							<div tabby-dro-indicator="mode-abs" class="on">abs</div>
+							<div tabby-dro-indicator="mode-inc" class="">inc</div>
 						</button>
 					</div>
 				</div>
 
-				<div id="y-axis" class="axis-display">
+				<div id="yAxis" tabby-dro-axis="y" class="axis-display">
 					<div class="axis-display-label">
-						<button class="btn btn-primary">Y(0)</button>
+						<button tabby-dro-button="zeroButton" class="btn btn-primary">Y(0)</button>
 					</div>
+				
 					<div class="axis-display-value">
-						<span class="axis-display-value-background">888.8888</span>
-						<span id="y-value" class="axis-display-value-foreground">-!4.0220</span>
+						<div class="axis-display-value-background">888.8888</div>
+						<div tabby-dro-indicator="value-current" class="axis-display-value-foreground">!12.6971</div>
 						<div class="axis-display-value-units">
-							<div class="inches off">&rdquo;</div>
-							<div class="on">mm</div>
+							<div tabby-dro-indicator="units-in" class="">&rdquo;</div>
+							<div tabby-dro-indicator="units-mm" class="on">mm</div>
 						</div>
 					</div>
+				
 					<div class="axis-display-controls">
-						<button class="btn btn-secondary two-line">
-							<span class="on">abs</span>
-							<span class="off">inc</span>
+						<button tabby-dro-button="absIncButton" class="btn btn-secondary two-line-toggle">
+							<div tabby-dro-indicator="mode-abs" class="on">abs</div>
+							<div tabby-dro-indicator="mode-inc" class="">inc</div>
 						</button>
 					</div>
 				</div>
 
-				<div id="z-axis" class="axis-display">
+				<div id="zAxis" tabby-dro-axis="z" class="axis-display">
 					<div class="axis-display-label">
-						<button class="btn btn-primary">Z(0)</button>
+						<button tabby-dro-button="zeroButton" class="btn btn-primary">Z(0)</button>
 					</div>
+				
 					<div class="axis-display-value">
-						<span class="axis-display-value-background">888.8888</span>
-						<span id="z-value" class="axis-display-value-foreground">!!0.0001</span>
+						<div class="axis-display-value-background">888.8888</div>
+						<div tabby-dro-indicator="value-current" class="axis-display-value-foreground">!12.6971</div>
 						<div class="axis-display-value-units">
-							<div class="inches off">&rdquo;</div>
-							<div class="on">mm</div>
+							<div tabby-dro-indicator="units-in" class="inches">&rdquo;</div>
+							<div tabby-dro-indicator="units-mm" class="on">mm</div>
 						</div>
 					</div>
+				
 					<div class="axis-display-controls">
-						<button class="btn btn-secondary two-line">
-							<span class="on">abs</span>
-							<span class="off">inc</span>
+						<button tabby-dro-button="absIncButton" class="btn btn-secondary two-line-toggle">
+							<div tabby-dro-indicator="mode-abs" class="on">abs</div>
+							<div tabby-dro-indicator="mode-inc" class="">inc</div>
 						</button>
 					</div>
 				</div>
 
-				<div id="w-axis" class="axis-display">
+				<div id="wAxis" tabby-dro-axis="w" class="axis-display">
 					<div class="axis-display-label">
-						<button class="btn btn-primary">W(0)</button>
+						<button tabby-dro-button="zeroButton" class="btn btn-primary">W(0)</button>
 					</div>
+				
 					<div class="axis-display-value">
-						<span class="axis-display-value-background">888.8888</span>
-						<span id="w-value" class="axis-display-value-foreground">235.0142</span>
+						<div class="axis-display-value-background">888.8888</div>
+						<div tabby-dro-indicator="value-current" class="axis-display-value-foreground">235.0142</div>
 						<div class="axis-display-value-units">
-							<div class="on">&#176;</div>
-							<div class="off">rad</div>
+							<div tabby-dro-indicator="units-deg" class="on">&#176;</div>
+							<div tabby-dro-indicator="units-rad "class="">rad</div>
 						</div>
 					</div>
+				
 					<div class="axis-display-controls">
-						<button class="btn btn-secondary two-line">
-							<span class="on">abs</span>
-							<span class="off">inc</span>
+						<button tabby-dro-button="absIncButton" class="btn btn-secondary two-line-toggle">
+							<div tabby-dro-indicator="mode-abs" class="on">abs</div>
+							<div tabby-dro-indicator="mode-inc" class="">inc</div>
 						</button>
 					</div>
 				</div>
 
-				<div id="tachometer" class="axis-display">
+				<div id="tachometer" tabby-dro-axis="t" class="axis-display">
 					<div class="axis-display-label">
 						RPM
-						<!--button class="btn btn-primary">RPM</button-->
 					</div>
+
 					<div class="axis-display-value">
-						<span class="axis-display-value-background">888888</span>
-						<span id="w-value" class="axis-display-value-foreground">!!!!69</span>
+						<div class="axis-display-value-background">888888</div>
+						<div tabby-dro-indicator="value-current" class="axis-display-value-foreground">!!!!69</div>
 						<div class="axis-display-value-units">
-							<div class="off">sfm</div>
-							<div class="on">rpm</div>
+							<div tabby-dro-indicator="units-sfm" class="">sfm</div>
+							<div tabby-dro-indicator="units-rpm" class="on">rpm</div>
 						</div>
 					</div>
 					<div class="axis-display-controls">
-						<button class="btn btn-secondary two-line">
-							<span class="off">sfm</span>
-							<span class="on">rpm</span>
+						<button tabby-dro-button="unitsButton" class="btn btn-secondary two-line-toggle">
+							<div tabby-dro-indicator="units-sfm" class="">sfm</div>
+							<div tabby-dro-indicator="units-rpm" class="on">rpm</div>
 						</button>
 					</div>
 				</div>
@@ -159,17 +167,16 @@
 					Full<br/>screen
 				</button>
 
-				<button class="btn btn-primary two-line">
-					<span class="on">abs</span>
-					<span class="off">inc</span>
+				<button tabby-dro-control='mode' class="btn btn-primary two-line-toggle">
+					<div class="on">abs</div>
+					<div class="">inc</div>
 				</button>
-				<button class="btn btn-primary two-line">
-					<span class="off">in</span>
-					<span class="on">mm</span>
+				<button tabby-dro-control='units' class="btn btn-primary two-line-toggle">
+					<div class="">in</div>
+					<div class="on">mm</div>
 				</button>
-				<button class="btn btn-primary two-line">
-					<span>XYZ</span>
-					<span>=0</span>
+				<button tabby-dro-control='zero' class="btn btn-primary">
+					XYZ<br/>=0
 				</button>
 			</div>
 			<div class="points">
@@ -181,12 +188,13 @@
 		<script type="text/javascript" src="cordova.js"></script>
 		<script type="text/javascript" src="js/index.js"></script>
 
-		<script>
-			app.initialize();
-		</script>
-
 		<script src="js/jquery-3.3.1.slim.min.js"></script>
 		<script src="js/bootstrap.min.js"></script>
+
+		<script>
+			var app = new TabbyDROApplication();
+			app.initialize();
+		</script>
 	</body>
 
 </html>

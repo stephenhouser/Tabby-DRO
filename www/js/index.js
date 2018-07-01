@@ -4,64 +4,227 @@
     Modified 9 May 2013
     by Tom Igoe
 */
+formatDisplayNumber(value, width, precision) {
+    var padChar = '!';
+    var sign = value < 0 ? '-' : padChar;
+    var fixed_number = Number(Math.abs(value)).toFixed(precision);
+    return sign + fixed_number.padStart(width + 1, padChar);
+}
 class Axis {
-    var mode = 'abs';
-    var 
-    constructor() {
+    constructor(prefix) {
+        this.prefix = prefix;       // the prefix character sent by remote
+        this.mode = 'abs';          // displaying abs(solute) or inc(remental)
+        this.units = 'in';          // in(ches) or mm(millimeters)
+                                    // rpm, sfm
+                                    // (deg)rees or rad(ians)
+        this.rawReading = 0.0;     // last raw reading from remote
+        this.zeroSetting = 0.0;    // current zero set-point in raw values
+        this.currentValue = 0.0;   // current offset from zero
 
+        this.indicators = {};       // the display indicators, by tabby-dro-indicator
+    }
+
+    setRawValue(rawReading) {
+        this.rawReading = rawReading;
+        this.currentValue = this.zeroSetting - this.rawReading;
+
+        if ('value-current' in this.indicators) {
+            var indicator = this.indicators['value-current'];
+
+            var displayValue = '';
+            if (this.units == 'rpm' || this.units == 'sfm') {
+                displayValue = formatDisplayNumber(this.current_value, 5, 0);
+            } else {
+                displayValue = formatDisplayNumber(this.current_value, 6, 4);
+            }
+
+            if (displayValue) {
+                indicator.innerHTML = '';
+                indicator.appendChild(document.createTextNode(displayValue));
+            }
+        }
+    }
+
+    setZero() {
+        console.log(this.prefix + ": set zero at " + this.rawReading);
+        this.zeroSetting = this.rawReading;
+        this.currentRalue = this.zeroSetting - this.rawReading;
+        // TODO: update interface current_value
+    }
+
+    addIndicator(indicatorName, indicator) {
+        var name = indicatorName.toLowerCase();
+        this.indicators[name] = indicator
+
+        // set current state based on "on" class in HTML
+        if (indicator.classList.contains('on')) {
+            console.log(name + " is ON")
+            var [prefix, key] = name.split('-')
+            if (prefix === 'units') {
+                this.units = key;
+            }
+            if (prefix === 'mode') {
+                this.mode = key;
+            }
+        }
+    }
+
+    turnOnIndicator(indicatorName) {
+        if (indicatorName in this.indicators) {
+            this.indicators[indicatorName].classList.remove('off');
+            this.indicators[indicatorName].classList.add('on');
+        }
+    }
+
+    turnOffIndicator(indicatorName) {
+        if (indicatorName in this.indicators) {
+            this.indicators[indicatorName].classList.remove('on');
+            this.indicators[indicatorName].classList.add('off');
+        }
+    }
+
+    toggleMode() {
+        console.log(this.prefix + ": toggle mode " + this.mode);
+        this.turnOffIndicator('mode-' + this.mode);
+        this.mode = (this.mode === 'abs') ? 'inc' : 'abs';
+        this.turnOnIndicator('mode-' + this.mode);
+    }
+
+    toggleUnits() {
+        console.log(this.prefix + ": toggle units " + this.units);
+        this.turnOffIndicator('units-' + this.units);
+        if (this.units === 'in' || this.units === 'mm') {
+            this.mode = (this.mode === 'inch') ? 'mm' : 'in';
+        }
+
+        if (this.units === 'rpm' || this.units === 'sfm') {
+            this.mode = (this.mode === 'rpm') ? 'sfm' : 'rpm';
+            // TODO: update interface units
+        }
+
+        if (this.units === 'deg' || this.units === 'rad') {
+            this.mode = (this.mode === 'deg') ? 'rad' : 'deg';
+            // TODO: update interface units
+        }
+        this.turnOnIndicator('units-' + this.units);
     }
 };
 
-var axis_defaults = {
-    'mode': 'abs',  // abs, inc
-    'units': 'in',   // (in, mm), (rpm, sfm), (deg, rad)
-    'raw': 0.0,     // current reading (raw value)
-    'zero': 0.0,    // raw value that is zero position
-    'value': 0.0,   // current reading (relative to zero)
-};
+class TabbyDROApplication {
+    constructor() {
+        this.connected = false;
+        this.macAddress = "20:17:12:05:01:59";
 
-var app = {
-    chars: "",
-    macAddress: "20:17:12:05:01:59",
+        this.axes = {}; // hash of axes, indexed by prefix
 
-    auto_connect: "20:17:12:05:01:59",     // or null if no auto-connect
+        this.points = [
+            [0.0, 0.0, 0.0, 0.0],
+            [1.0, 1.0, 0.0, 0.0],
+            [2.0, 2.0, 2.0, 0.0]
+        ];
 
-    touch_probe: false,
+        this.tools = {
+            '1/8" mill': { 'name': '1/8" 4-flute mill', 'diameter': 0.125, 'units': 'in' },
+            '1/4" mill': { 'name': '1/4" 4-flute mill', 'diameter': 0.25, 'units': 'in' },
+            '1/2" mill': { 'name': '1/2" 4-flute mill', 'diameter': 0.5, 'units': 'in' },
+        }
+    };
 
-    axis = {
-        'x': Object.assign({}, axis_defaults),
-        'y': Object.assign({}, axis_defaults),
-        'z': Object.assign({}, axis_defaults),
-        'w': Object.assign({}, axis_defaults),
-        't': Object.assign({}, axis_defaults),
-    },
-
-    points = [
-        [0.0, 0.0, 0.0, 0.0],
-        [1.0, 1.0, 0.0, 0.0],
-        [2.0, 2.0, 2.0, 0.0]
-    ],
-
-    tools = {
-        '1/8" mill': { 'name': '1/8" 4-flute mill', 'diameter': 0.125, 'units': 'in' },
-        '1/4" mill' : { 'name': '1/4" 4-flute mill', 'diameter': 0.25, 'units': 'in'},
-        '1/2" mill': { 'name': '1/2" 4-flute mill', 'diameter': 0.5, 'units': 'in' },
-    },
-
-    /* Application constructor */
-    initialize: function () {
-        this.bindEvents();
-        console.log("Starting Tabby DRO");
-    },
-
-    /* bind any events that are required on startup to listeners */
-    bindEvents: function () {
+    initialize() {
+        console.log("TabbyDRO::initlaize()");
         document.addEventListener('deviceready', this.onDeviceReady, false);
-        connectButton.addEventListener('touchend', app.manageConnection, false);
-    },
+
+        var connectButton = document.getElementById('connectButton');
+        connectButton.addEventListener('touchend', this.manageConnection);
+        connectButton.addEventListener('click', this.manageConnection);
+
+        var displayAxes = document.querySelectorAll('[tabby-dro-axis]');
+        displayAxes.forEach(this.setupAxis, this);
+
+        var controlButtons = document.querySelectorAll('[tabby-dro-control]');
+        controlButtons.forEach(this.setupControlButton, this);
+    }
+
+    setupControlButton(button) {
+        var controlFunctionName = axisIndicator.getAttribute('tabby-dro-control');
+    }
+
+    setupAxisIndicator(axis, axisIndicator) {
+        var indicatorName = axisIndicator.getAttribute('tabby-dro-indicator');        
+        axis.addIndicator(indicatorName, axisIndicator);
+
+        //     case 'axisValue':
+        //         axis.indicatorValue = axisIndicator;
+        //         break;
+        //     case 'axisProbe':
+        //         break;
+    }
+
+    setupAxisButton(axis, axisButton) {
+        console.log("setup axis button: " + axis.prefix);
+        var buttonType = axisButton.getAttribute('tabby-dro-button');
+        switch (buttonType) {
+            case 'zeroButton':
+                axisButton.addEventListener('click', function () {axis.setZero()});
+                axisButton.addEventListener('ontouchend', function () { axis.setZero() });
+                break;
+
+            case 'absIncButton':
+                axisButton.addEventListener('click', function () { axis.toggleMode() });
+                axisButton.addEventListener('ontouchend', function () { axis.toggleMode() });
+                break;
+
+            case 'unitsButton':
+                axisButton.addEventListener('click', function () { axis.toggleUnits() });
+                axisButton.addEventListener('ontouchend', function () { axis.toggleUnits() });
+                break;
+
+            default:
+                console.log('Unknow button:' + buttonType);
+                break;
+        }
+    }
+
+    setupAxis(axisDiv) {
+        console.log(axisDiv);
+        let self = this;
+        var axisPrefix = axisDiv.getAttribute('tabby-dro-axis');
+        var axis = new Axis(axisPrefix);
+
+        var axisButtons = axisDiv.querySelectorAll('[tabby-dro-button]');
+        axisButtons.forEach(function(axisButton) {
+           self.setupAxisButton(axis, axisButton);
+       });
+
+        var axisIndicators = axisDiv.querySelectorAll('[tabby-dro-indicator]');
+        axisIndicators.forEach(function(axisIndicator) {
+            self.setupAxisIndicator(axis, axisIndicator);
+        });
+
+        this.axes[axisPrefix] = axis;
+    }
+
+    zeroAllAxes() {
+
+    }
+
+    setAllUnits() {
+
+    }
+
+    alert(event) {
+        alert(event);
+    }
 
     /* this runs when the device is ready for user interaction: */
-    onDeviceReady: function () {
+    onDeviceReady() {
+        console.log('TabbyDRO::onDeviceReady');
+        if (typeof bluetoothSerial === 'undefined') {
+            app.clear();
+            app.notify("Bluetooth is not available.")
+            return;
+        }
+
         // check to see if Bluetooth is turned on.
         // this function is called only
         //if isEnabled(), below, returns success:
@@ -88,12 +251,21 @@ var app = {
             listPorts,
             notEnabled
         );
-    },
+    };
+
     /* Connects if not connected, and disconnects if connected */
-    manageConnection: function () {
+    manageConnection() {
+        console.log('TabbyDRO::manageConnection');
+        if (typeof bluetoothSerial === 'undefined') {
+            app.clear();
+            app.notify("Bluetooth is not available.")
+            return;
+        }
+
         // connect() will get called only if isConnected() (below)
         // returns failure. In other words, if not connected, then connect:
         var connect = function () {
+            console.log('TabbyDRO::connect');
             // if not connected, do this:
             app.notify("Attempting to connect. " +
                 "Make sure the serial port is open on the target device.");
@@ -108,6 +280,7 @@ var app = {
         // disconnect() will get called only if isConnected() (below)
         // returns success  In other words, if  connected, then disconnect:
         var disconnect = function () {
+            console.log('TabbyDRO::disconnect');
             app.clear();
             app.notify("Attempting to disconnect");
             // if connected, do this:
@@ -119,9 +292,11 @@ var app = {
 
         // here's the real action of the manageConnection function:
         bluetoothSerial.isConnected(disconnect, connect);
-    },
+    };
+
     /* subscribes to a Bluetooth serial listener for newline and changes the button */
-    openPort: function () {
+    openPort() {
+        console.log('TabbyDRO::openPort');
         // if you get a good Bluetooth serial connection:
         app.clear();
         app.notify("Connected to: " + app.macAddress);
@@ -133,12 +308,13 @@ var app = {
         bluetoothSerial.subscribe(';', function (data) {
             app.update(data);
         });
-    },
+    };
 
     /*
         unsubscribes from any Bluetooth serial listener and changes the button:
     */
-    closePort: function () {
+    closePort() {
+        console.log('TabbyDRO::closePort');
         // if you get a good Bluetooth serial connection:
         app.notify("Disconnected from: " + app.macAddress);
         // change the button's name:
@@ -150,57 +326,47 @@ var app = {
             },
             app.showError
         );
-    },
+    };
 
     /* Show error */
-    showError: function (error) {
+    showError(error) {
+        console.log('TabbyDRO::showError ' + error);
         app.notify(error);
-    },
+    }
 
     /* Show notifications */
-    notify: function(message) { 
+    notify(message) { 
+        console.log('TabbyDRO::notify ' + message);
         var message_div = document.getElementById('messages'),
             label = document.createTextNode(message),
             lineBreak = document.createElement("br");     // a line break
 
         message_div.appendChild(lineBreak);          // add a line break
         message_div.appendChild(label);
-    },
+    };
 
     /* Update data from Remote */
-    update: function (raw_data) {
-        console.log(raw_data);
+    update(rawData) {
+        console.log('TabbyDRO::update ' + rawData);
 
-        var sensor_div_id = raw_data[0].toLowerCase() + '-value';
-        var sensor_div = document.getElementById(sensor_div_id);
-        if (sensor_div) {
-            var message_value = message.substr(1, raw_data.length - 2);
-            var display_value = null;
-
-            if (sensor_div_id == 't-value') {
-                display_value = this.formatAxis(message_value, 5, 0);
-            } else if (sensor_div_id == 'p-value') {
-                display_value = message_value == 0 ? 'Off' : 'On';
-            } else {
-                display_value = this.formatAxis(message_value, 6, 4);
-            }
-
-            if (display_value) {
-                sensor_div.innerHTML = '';
-                sensor_div.appendChild(document.createTextNode(display_value));
+        var axisPrefix = message[0].toLowerCase();
+        var rawReading = message.substr(1, rawData.length - 2);
+        if (!Number.isNaN(Number.parseFloat(rawReading))) {
+            if (axisPrefix in this.axes) {
+                var axis = this.axes[axisPrefix];
+                axis.setRawValue(parseFloat(rawReading));
             }
         }
-    },
+    };
+
     /* clears the message div: */
-    clear: function () {
+    clear() {
+        console.log('TabbyDRO::clear');
         var message_div = document.getElementById("messages");
         message_div.innerHTML = "";
-    },
+    };
 
-    formatAxis: function(value, width, precision) {
-        var padChar = '!';
-        var sign = value < 0 ? '-' : padChar;
-        var fixed_number = Number(Math.abs(value)).toFixed(precision);
-        return sign + fixed_number.padStart(width+1, padChar);
-    }
-};      // end of app
+};    
+  // end of app
+//var app = new TabbyDROApplication();
+

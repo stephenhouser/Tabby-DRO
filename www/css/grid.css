@@ -32,69 +32,50 @@ html {
 }
 
 body {
-	margin: 0px;
-  padding: 0px;
+    padding: 0px;
+    margin: 0px;
 }
 
-.app {
-  display: grid;
-  grid-gap: 5px;
-  grid-template-areas: 
-    "header"
-    "nav"
-    "display"
-    "points"
-	  "tools"
-    "calculator";
-  background-color: black;
-  color: white;
-}
+/** The major areas of the application */
 
-.main-header {
-  grid-area: header;
-}
-
+/* The area where the Axes are displayed */
 .display {
   grid-area: display;
+
+  padding: 0.0em 0.0em 0.0em 0.5em;
 }
 
+/* Where random system control buttons are displayed */
 .controls {
   grid-area: controls;
+
   border: 1px solid grey;
-  padding: .5em .5em .5em .5em;
+  border-radius: 5px;
+  padding: 0.5em 0.5em 0.5em 0.5em;
 }
 
+/* Where the list of saved points is displayed */
 .points {
   grid-area: points;
+
+  border: 1px solid grey;
+  border-radius: 5px;
+  padding: 0.5em 0.5em 0.5em 0.5em;
+}
+
+/* Where the messages and footer is displayed */
+.messages {
+  grid-area: messages;
   border: 1px solid grey;
   padding: .5em .5em .5em .5em;
 }
 
-.main-footer {
-  grid-area: footer;
-  border: 1px solid grey;
-  padding: .5em .5em .5em .5em;
-}
-
-@media (min-width: 500px) {
-  .app {
-    grid-template-columns: 3fr 1fr;
-    grid-template-areas: 
-      "navbar  navbar"
-      "display controls"
-      "display points"
-      "footer  footer";
-  }
-  nav ul {
-    display: flex;
-    justify-content: space-between;
-  }
-}
+/** The Axis Display area */
 
 .axis-display {
   border: 1px solid grey;
   border-radius: 5px;
-  font-size: 1em;
+  font-size: .75em;
 
   display: flex;
   flex-direction: row;
@@ -105,26 +86,22 @@ body {
   margin-bottom: 0.25em;
   padding-left: 0.25em;
   padding-right: 0.25em;
-  padding-top: 0.25em;
-  padding-bottom: 0.25em;
 }
 
-@media (min-width: 576px) {
+@media (min-width: 321px) {
   .axis-display {
-    font-size: 1.25em;
-  }
+      font-size: 1em;
+    }
 }
 
-@media (min-width: 720px) {
+@media (min-width: 640px) {
   .axis-display {
-    font-size: 1.75em;
-  }
+      font-size: 2em;
+    }
 }
 
-@media (min-width: 780px) {
-  .axis-display {
-    font-size: 2em;
-  }
+.axis-display:last-child {
+  margin-bottom: 0px;
 }
 
 .axis-display-label {
@@ -141,12 +118,14 @@ body {
 
 .axis-display-value-background {
     position: absolute;
+    display: inline-block;
     z-index: 0;
     color: rgba(128, 128, 128, 0.33);
 }
 
 .axis-display-value-foreground {
     z-index: 1;
+    display: inline-block;
     color: greenyellow;
 }
 
@@ -161,14 +140,15 @@ body {
   flex-wrap: wrap;
 
   line-height: 2em;
+  color: rgba(128, 128, 128, 1.0);
 }
 
-.inches {
+.axis-display-value-units .inches {
   font-size: 2em;
 }
 
 .axis-display-label button {
-    height: 3.5em;
+    height: 3em;
 }
 
 .controls button,
@@ -178,17 +158,31 @@ body {
   height: initial;
 }
 
-.controls .two-line span,
-.axis-display-controls .two-line span {
+.two-line-toggle div {
   display: block;
+  color: rgba(128, 128, 128, 1.0);
 }
 
-.controls .two-line span:first-child,
-.axis-display-controls .two-line span:first-child {
+.two-line-toggle div:first-child {
   border-bottom: 2px solid grey;;
 }
 
-#w-axis {
+.on {
+    color: greenyellow !important;
+    font-weight: bold;
+}
+
+.off {
+    color: rgba(128, 128, 128, 1.0);
+}
+
+
+
+#zAxis .axis-display-value-foreground {
+    color: red;
+}
+
+#wAxis {
     display: none;
 }
 
@@ -196,12 +190,30 @@ body {
     display: none;
 }
 
-.on {
-    color: greenyellow;
-    font-weight: bold;
-}
 
-.off {
-    color: rgba(128, 128, 128, 1.0);
+/* Base layout of the app's grid, all in rows */
+.app {
+    background-color: black;
+    color: white;
+    display: grid;
+    grid-template-columns: auto;
+    grid-template-areas:
+      "display"
+      "controls"
+      "points"
+      "messages";
+ }
+
+@media only screen 
+  and (orientation: landscape) 
+  and (min-width: 768px) {
+  .app {
+    display: grid;
+    grid-template-columns: 3fr 1fr;
+    grid-template-areas: 
+      "display controls"
+      "display points"
+      "messages messages";
+  }
 }
 
