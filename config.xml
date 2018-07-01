@@ -14,11 +14,12 @@
     <preference name="BackgroundColor" value="000000FF" />
     <preference name="DisallowOverscroll" value="true" />
     <preference name="StatusBarOverlaysWebView" value="false" />
-    <preference name="StatusBarStyle" value="blackopaque" />
+    <preference name="StatusBarStyle" value="default" />
     <plugin name="cordova-plugin-whitelist" spec="1" />
     <plugin name="cordova-plugin-bluetooth-serial" spec="~0.4.7" />
     <plugin name="cordova-plugin-splashscreen" spec="^5.0.2" />
     <plugin name="cordova-plugin-statusbar" spec="https://github.com/apache/cordova-plugin-statusbar.git" />
     <engine name="android" spec="^7.0.0" />
     <engine name="ios" spec="^4.5.4" />
+    <plugin name="cordova-plugin-vibration" spec="^3.1.0" />
 </widget>

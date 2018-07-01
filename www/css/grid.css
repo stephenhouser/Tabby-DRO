@@ -151,7 +151,6 @@ body {
     height: 3em;
 }
 
-
 .controls button,
 .axis-display-controls button {
   background-color: black;
@@ -219,9 +218,3 @@ body {
       "messages messages";
   }
 }
-
-/* .btn-secondary:hover {
-  color: #fff;
-  background-color: black !important;
-  border-color: white !important;
-} */
