@@ -42,7 +42,7 @@ body {
 .display {
   grid-area: display;
 
-  padding: 0.0em 0.0em 0.0em 0.5em;
+  xpadding: 0.0em 0.0em 0.0em 0.5em;
 }
 
 /* Where random system control buttons are displayed */
@@ -151,6 +151,7 @@ body {
     height: 3em;
 }
 
+
 .controls button,
 .axis-display-controls button {
   background-color: black;
@@ -193,6 +194,8 @@ body {
 
 /* Base layout of the app's grid, all in rows */
 .app {
+    padding: 5px 5px 5px 5px;
+
     background-color: black;
     color: white;
     display: grid;
@@ -217,3 +220,8 @@ body {
   }
 }
 
+/* .btn-secondary:hover {
+  color: #fff;
+  background-color: black !important;
+  border-color: white !important;
+} */

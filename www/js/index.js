@@ -4,7 +4,7 @@
     Modified 9 May 2013
     by Tom Igoe
 */
-formatDisplayNumber(value, width, precision) {
+function formatDisplayNumber(value, width, precision) {
     var padChar = '!';
     var sign = value < 0 ? '-' : padChar;
     var fixed_number = Number(Math.abs(value)).toFixed(precision);
@@ -26,16 +26,16 @@ class Axis {
 
     setRawValue(rawReading) {
         this.rawReading = rawReading;
-        this.currentValue = this.zeroSetting - this.rawReading;
+        this.currentValue = this.rawReading - this.zeroSetting;
 
         if ('value-current' in this.indicators) {
             var indicator = this.indicators['value-current'];
 
             var displayValue = '';
             if (this.units == 'rpm' || this.units == 'sfm') {
-                displayValue = formatDisplayNumber(this.current_value, 5, 0);
+                displayValue = formatDisplayNumber(this.currentValue, 5, 0);
             } else {
-                displayValue = formatDisplayNumber(this.current_value, 6, 4);
+                displayValue = formatDisplayNumber(this.currentValue, 6, 4);
             }
 
             if (displayValue) {
@@ -108,12 +108,13 @@ class Axis {
         }
         this.turnOnIndicator('units-' + this.units);
     }
-};
+}
 
 class TabbyDROApplication {
     constructor() {
         this.connected = false;
-        this.macAddress = "20:17:12:05:01:59";
+        //this.macAddress = "20:17:12:05:01:59";
+        this.macAddress = "9C2CED71-E4F4-59D6-9D61-35C47C4C8437";
 
         this.axes = {}; // hash of axes, indexed by prefix
 
@@ -128,14 +129,14 @@ class TabbyDROApplication {
             '1/4" mill': { 'name': '1/4" 4-flute mill', 'diameter': 0.25, 'units': 'in' },
             '1/2" mill': { 'name': '1/2" 4-flute mill', 'diameter': 0.5, 'units': 'in' },
         }
-    };
+    }
 
     initialize() {
         console.log("TabbyDRO::initlaize()");
         document.addEventListener('deviceready', this.onDeviceReady, false);
 
         var connectButton = document.getElementById('connectButton');
-        connectButton.addEventListener('touchend', this.manageConnection);
+        //connectButton.addEventListener('touchend', this.manageConnection, false);
         connectButton.addEventListener('click', this.manageConnection);
 
         var displayAxes = document.querySelectorAll('[tabby-dro-axis]');
@@ -146,7 +147,7 @@ class TabbyDROApplication {
     }
 
     setupControlButton(button) {
-        var controlFunctionName = axisIndicator.getAttribute('tabby-dro-control');
+        //var controlFunctionName = axisIndicator.getAttribute('tabby-dro-control');
     }
 
     setupAxisIndicator(axis, axisIndicator) {
@@ -166,17 +167,20 @@ class TabbyDROApplication {
         switch (buttonType) {
             case 'zeroButton':
                 axisButton.addEventListener('click', function () {axis.setZero()});
-                axisButton.addEventListener('ontouchend', function () { axis.setZero() });
+                //axisButton.addEventListener('ontouchend', function () { axis.setZero() }, false);
                 break;
 
             case 'absIncButton':
-                axisButton.addEventListener('click', function () { axis.toggleMode() });
-                axisButton.addEventListener('ontouchend', function () { axis.toggleMode() });
+                axisButton.addEventListener('click', function () { 
+                    axis.toggleMode(); 
+                    this.classList.remove('active'); 
+                });
+                //axisButton.addEventListener('ontouchend', function () { axis.toggleMode() }, false);
                 break;
 
             case 'unitsButton':
                 axisButton.addEventListener('click', function () { axis.toggleUnits() });
-                axisButton.addEventListener('ontouchend', function () { axis.toggleUnits() });
+                //axisButton.addEventListener('ontouchend', function () { axis.toggleUnits() }, false);
                 break;
 
             default:
@@ -218,7 +222,7 @@ class TabbyDROApplication {
 
     /* this runs when the device is ready for user interaction: */
     onDeviceReady() {
-        console.log('TabbyDRO::onDeviceReady');
+        //console.log('TabbyDRO::onDeviceReady');
         if (typeof bluetoothSerial === 'undefined') {
             app.clear();
             app.notify("Bluetooth is not available.")
@@ -251,7 +255,7 @@ class TabbyDROApplication {
             listPorts,
             notEnabled
         );
-    };
+    }
 
     /* Connects if not connected, and disconnects if connected */
     manageConnection() {
@@ -292,7 +296,7 @@ class TabbyDROApplication {
 
         // here's the real action of the manageConnection function:
         bluetoothSerial.isConnected(disconnect, connect);
-    };
+    }
 
     /* subscribes to a Bluetooth serial listener for newline and changes the button */
     openPort() {
@@ -308,7 +312,7 @@ class TabbyDROApplication {
         bluetoothSerial.subscribe(';', function (data) {
             app.update(data);
         });
-    };
+    }
 
     /*
         unsubscribes from any Bluetooth serial listener and changes the button:
@@ -326,7 +330,7 @@ class TabbyDROApplication {
             },
             app.showError
         );
-    };
+    }
 
     /* Show error */
     showError(error) {
@@ -343,30 +347,25 @@ class TabbyDROApplication {
 
         message_div.appendChild(lineBreak);          // add a line break
         message_div.appendChild(label);
-    };
+    }
 
     /* Update data from Remote */
     update(rawData) {
-        console.log('TabbyDRO::update ' + rawData);
-
-        var axisPrefix = message[0].toLowerCase();
-        var rawReading = message.substr(1, rawData.length - 2);
+        var axisPrefix = rawData[0].toLowerCase();
+        var rawReading = rawData.substr(1, rawData.length - 2);
+        //console.log('TabbyDRO::update ' + rawData + " => " + rawReading);
         if (!Number.isNaN(Number.parseFloat(rawReading))) {
-            if (axisPrefix in this.axes) {
-                var axis = this.axes[axisPrefix];
-                axis.setRawValue(parseFloat(rawReading));
+            if (axisPrefix in app.axes) {
+                var axis = app.axes[axisPrefix];
+                axis.setRawValue(Number.parseFloat(rawReading));
             }
         }
-    };
+    }
 
     /* clears the message div: */
     clear() {
         console.log('TabbyDRO::clear');
         var message_div = document.getElementById("messages");
         message_div.innerHTML = "";
-    };
-
-};    
-  // end of app
-//var app = new TabbyDROApplication();
-
+    }
+} 
