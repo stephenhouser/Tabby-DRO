@@ -1,30 +1,30 @@
 
 @font-face {
   font-family: "DSEG7Classic-Italic";
-  src: url("../fonts-DSEG_v045/DSEG7-Classic/DSEG7Classic-Italic.woff2"),
-       url("../fonts-DSEG_v045/DSEG7-Classic/DSEG7Classic-Italic.woff"),
-       url("../fonts-DSEG_v045/DSEG7-Classic/DSEG7Classic-Italic.ttf");
+  src: url("fonts-DSEG_v045/DSEG7-Classic/DSEG7Classic-Italic.woff2"),
+       url("fonts-DSEG_v045/DSEG7-Classic/DSEG7Classic-Italic.woff"),
+       url("fonts-DSEG_v045/DSEG7-Classic/DSEG7Classic-Italic.ttf");
 }
 
 @font-face {
   font-family: "DSEG7Classic-BoldItalic";
-  src: url("../fonts-DSEG_v045/DSEG7-Classic/DSEG7Classic-BoldItalic.woff2"),
-       url("../fonts-DSEG_v045/DSEG7-Classic/DSEG7Classic-BoldItalic.woff"),
-       url("../fonts-DSEG_v045/DSEG7-Classic/DSEG7Classic-BoldItalic.ttf");
+  src: url("fonts-DSEG_v045/DSEG7-Classic/DSEG7Classic-BoldItalic.woff2"),
+       url("fonts-DSEG_v045/DSEG7-Classic/DSEG7Classic-BoldItalic.woff"),
+       url("fonts-DSEG_v045/DSEG7-Classic/DSEG7Classic-BoldItalic.ttf");
 }
 
 @font-face {
   font-family: "DSEG7Modern-Italic";
-  src: url("../fonts-DSEG_v045/DSEG7-Modern/DSEG7Modern-Italic.woff2"),
-       url("../fonts-DSEG_v045/DSEG7-Modern/DSEG7Modern-Italic.woff"),
-       url("../fonts-DSEG_v045/DSEG7-Modern/DSEG7Modern-Italic.ttf");
+  src: url("fonts-DSEG_v045/DSEG7-Modern/DSEG7Modern-Italic.woff2"),
+       url("fonts-DSEG_v045/DSEG7-Modern/DSEG7Modern-Italic.woff"),
+       url("fonts-DSEG_v045/DSEG7-Modern/DSEG7Modern-Italic.ttf");
 }
 
 @font-face {
   font-family: "DSEG7Modern-BoldItalic";
-  src: url("../fonts-DSEG_v045/DSEG7-Modern/DSEG7Modern-BoldItalic.woff2"),
-       url("../fonts-DSEG_v045/DSEG7-Modern/DSEG7Modern-BoldItalic.woff"),
-       url("../fonts-DSEG_v045/DSEG7-Modern/DSEG7Modern-BoldItalic.ttf");
+  src: url("fonts-DSEG_v045/DSEG7-Modern/DSEG7Modern-BoldItalic.woff2"),
+       url("fonts-DSEG_v045/DSEG7-Modern/DSEG7Modern-BoldItalic.woff"),
+       url("fonts-DSEG_v045/DSEG7-Modern/DSEG7Modern-BoldItalic.ttf");
 }
 
 html {
