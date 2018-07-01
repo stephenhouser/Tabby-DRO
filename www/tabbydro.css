@@ -62,10 +62,16 @@ body {
 }
 
 /* Where the messages and footer is displayed */
+.messages::before {
+  clear: both;
+}
+
 .messages {
   grid-area: messages;
+
   border: 1px solid grey;
-  padding: .5em .5em .5em .5em;
+  border-radius: 5px;
+  padding: 0.5em 0.5em 0.5em 0.5em;
 }
 
 /** The Axis Display area */
@@ -174,8 +180,6 @@ body {
     color: rgba(128, 128, 128, 1.0);
 }
 
-
-
 #zAxis .axis-display-value-foreground {
     color: red;
 }
@@ -188,7 +192,6 @@ body {
     display: none;
 }
 
-
 /* Base layout of the app's grid, all in rows */
 .app {
     padding: 5px 5px 5px 5px;
@@ -197,15 +200,16 @@ body {
     color: white;
     display: grid;
     grid-template-columns: auto;
+    grid-gap: 10px;
     grid-template-areas:
       "display"
       "controls"
       "points"
       "messages";
- }
+}
 
 @media only screen 
-  and (orientation: landscape) 
+  and (orientation: landscape)
   and (min-width: 768px) {
   .app {
     display: grid;
@@ -215,4 +219,25 @@ body {
       "display points"
       "messages messages";
   }
+
+  .display {
+    float: left;
+    width: 66%
+  }
+
+  .controls,
+  .points {
+    float: right;
+    width: 33%;
+  }
 }
+
+@supports (display: grid) {
+    .display,
+    .controls,
+    .points,
+    .messages {
+        width: auto;        
+    }
+}
+
