@@ -10,7 +10,7 @@
     <content src="tabbydro.html" />
     <preference name="Fullscreen" value="false" />
     <preference name="WebViewBounce" value="true" />
-    <preference name="BackgroundColor" value="000000FF" />
+    <preference name="BackgroundColor" value="0xff000000" />
     <preference name="DisallowOverscroll" value="true" />
     <preference name="StatusBarOverlaysWebView" value="false" />
     <preference name="StatusBarStyle" value="default" />
