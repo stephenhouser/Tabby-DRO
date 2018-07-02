@@ -27,7 +27,19 @@ The design based on [TouchDRO](http://www.yuriystoys.com/p/android-dro.html)'s l
 	* There's a [BluetoothSerial for React Native](https://github.com/rusel1989/react-native-bluetooth-serial)
 	* There's a lot more tooling to get set up and debugging is wierd. It all feels shaky.
 
-## Setup
+## Build (after a fresh checkout)
+
+```
+	cordova prepare
+	...
+	cordova build
+	...
+	cordova run ios
+	cordova run android
+	...
+```
+
+## Initial Setup (how I made the skeleton)
 
 ```
 	cordova create TabbyDRO
@@ -42,13 +54,4 @@ The design based on [TouchDRO](http://www.yuriystoys.com/p/android-dro.html)'s l
 	cordova plugin add cordova-plugin-statusbar
 	cordova plugin add https://github.com/chemerisuk/cordova-plugin-fastclick.git
 	cordova plugin add cordova-plugin-vibrate
-```
-
-## Build
-
-```
-	cordova build
-	cordova run ios
-	cordova run android
-	...
 ```
